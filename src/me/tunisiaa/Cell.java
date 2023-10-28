@@ -3,6 +3,10 @@ package me.tunisiaa;
 import javax.swing.*;
 import me.tunisiaa.Board;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class Cell extends JButton {
     public final int x;
     public final int y;
@@ -16,11 +20,31 @@ public class Cell extends JButton {
         this.y = y;
         this.isBomb = isBomb;
         this.board = b;
-        JButton jb = new JButton(Integer.toString(checkNeighbors()));
-        jb.setBounds(x*(this.board.cellSize + this.board.cellDistance), y*(this.board.cellSize + this.board.cellDistance), x*(this.board.cellSize + this.board.cellDistance) + this.board.cellSize, y*(this.board.cellSize + this.board.cellDistance) + this.board.cellSize);
-        this.board.add(jb);
+        this.setFont(new Font("arial", Font.BOLD, 30));
+        this.setBounds(x*(this.board.cellSize + this.board.cellDistance), y*(this.board.cellSize + this.board.cellDistance), this.board.cellSize, this.board.cellSize);
+            this.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(isBomb){
+                    setForeground(Color.RED);
+                }
+                checkNeighbors();
+            }
+        });
+        this.board.add(this);
     }
-    public int checkNeighbors(){
-        return 0;
+    public void checkNeighbors(){
+        int bombs = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if(i == 1 && j == 1){
+                    continue;
+                }
+                if(board.board[i][j].isBomb){
+                    bombs++;
+                }
+            }
+        }
+        this.setText(Integer.toString(bombs));
     }
 }

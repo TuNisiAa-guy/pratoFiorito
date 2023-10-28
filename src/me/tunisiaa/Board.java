@@ -12,7 +12,20 @@ public class Board extends JFrame {
     public final int cellDistance = 5;
     public int density;
 
+    public Cell[][] board;
+
     public Board(int width, int height, String difficulty){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedLookAndFeelException e) {
+            throw new RuntimeException(e);
+        }
         switch(difficulty.toLowerCase()){
             case "easy":
                 this.density = 10;
@@ -28,15 +41,16 @@ public class Board extends JFrame {
         }
         this.width = width;
         this.height = height;
+        board = new Cell[width][height];
         for (int i = 0; i < this.height; i++) {
             for (int j = 0; j < this.width; j++) {
                 Random r = new Random();
                 boolean isBomb = r.nextInt(100) < this.density;
-                this.add(new Cell(this, j, i, isBomb));
+                board[i][j] = new Cell(this, j, i, isBomb);
             }
         }
         this.setLayout(null);
-        this.setSize(this.width * (this.cellSize + this.cellDistance), this.height * (this.cellSize + this.cellDistance));
+        this.setSize(this.width * (this.cellSize + this.cellDistance) + this.cellDistance, this.height * (this.cellSize + this.cellDistance) + this.cellDistance);
     }
     public void render(){
         this.setVisible(true);
