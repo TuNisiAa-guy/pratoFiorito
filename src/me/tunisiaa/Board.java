@@ -26,6 +26,8 @@ public class Board extends JFrame {
             default:
                 throw new IllegalArgumentException("The difficulty chosen is not currently available, choose between \"easy\", \"medium\" and \"hard\".");
         }
+        this.width = width;
+        this.height = height;
         for (int i = 0; i < this.height; i++) {
             for (int j = 0; j < this.width; j++) {
                 Random r = new Random();
@@ -33,8 +35,11 @@ public class Board extends JFrame {
                 this.add(new Cell(this, j, i, isBomb));
             }
         }
-        public stati void render()
+        this.setLayout(null);
+        this.setSize(this.width * (this.cellSize + this.cellDistance), this.height * (this.cellSize + this.cellDistance));
     }
-
+    public void render(){
+        this.setVisible(true);
+    }
 
 }
