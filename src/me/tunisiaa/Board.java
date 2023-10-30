@@ -1,6 +1,7 @@
 package me.tunisiaa;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Random;
 
 public class Board extends JFrame {
@@ -9,7 +10,7 @@ public class Board extends JFrame {
     public int width;
     public int height;
     public final int cellSize = 50;
-    public final int cellDistance = 5;
+    public final int cellDistance = 2;
     public int density;
 
     public Cell[][] board;
@@ -56,4 +57,17 @@ public class Board extends JFrame {
         this.setVisible(true);
     }
 
+    public void showLoserDialog(){
+        JDialog dialog = new JDialog(this, "You lost");
+        dialog.setSize(300, 200);
+        JLabel labelOne = new JLabel("You lost!");
+        labelOne.setFont(new Font("Arial", Font.PLAIN, 30));
+        JLabel labelTwo = new JLabel(":(");
+        labelTwo.setFont(new Font("Arial", Font.PLAIN, 50));
+        labelOne.setBounds(75, 50,0, 0);
+        labelTwo.setBounds(120, 50, 0, 0);
+        dialog.add(labelOne);
+        dialog.add(labelTwo);
+        dialog.setVisible(true);
+    }
 }
