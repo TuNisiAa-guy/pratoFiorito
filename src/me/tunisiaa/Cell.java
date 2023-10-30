@@ -80,7 +80,7 @@ public class Cell extends JButton implements ActionListener{
     }*/
 
     public void setNumber(){
-        if(this.wasClicked || this.isLocked){
+        if(this.isLocked){
             return;
         }
         int bombs = 0;
@@ -102,16 +102,22 @@ public class Cell extends JButton implements ActionListener{
         this.setText(Integer.toString(bombs));
     }
     public void lock(){
+        this.isLocked = true;
         this.setFont(new Font("arial", Font.BOLD, 20));
         this.setText("X");
         this.setForeground(Color.RED);
-        this.isLocked = true;
     }
     public void unlock(){
-        this.setFont(new Font("arial", Font.BOLD, 30));
-        this.setText("");
-        this.setForeground(Color.BLACK);
         this.isLocked = false;
+        this.setFont(new Font("arial", Font.BOLD, 30));
+        if(wasClicked){
+            this.setNumber();
+        }else{
+            this.setText("");
+        }
+
+        this.setForeground(Color.BLACK);
+
     }
 
 }

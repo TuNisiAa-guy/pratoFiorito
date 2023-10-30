@@ -39,11 +39,15 @@ public class Board extends JFrame {
         }
         this.width = width;
         this.height = height;
+        this.total = this.width * this.height;
         board = new Cell[width][height];
         for (int i = 0; i < this.height; i++) {
             for (int j = 0; j < this.width; j++) {
                 Random r = new Random();
                 boolean isBomb = r.nextInt(100) < this.density;
+                if(isBomb){
+                    total--;
+                }
                 board[i][j] = new Cell(this, j, i, isBomb);
             }
         }
@@ -51,7 +55,6 @@ public class Board extends JFrame {
         this.setSize(this.width * (this.cellSize + this.cellDistance + 1) + 4, this.height * (this.cellSize + this.cellDistance + 1) + 27);
         this.setResizable(false);
         this.setTitle(String.format("Minesweeper : %s strikes", this.strikes));
-        this.total = this.width * this.height;
     }
     public void render(){
         this.setVisible(true);
