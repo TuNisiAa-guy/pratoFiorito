@@ -8,6 +8,7 @@ import me.tunisiaa.Board;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 public class Cell extends JButton implements ActionListener{
     public boolean wasClicked = false;
@@ -32,13 +33,20 @@ public class Cell extends JButton implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getModifiers() == 17){
+            this.setFont(new Font("arial", Font.BOLD, 20));
+            this.setText("X");
+            this.setForeground(Color.RED);
+            return;
+        }
         if(isBomb){
             setForeground(Color.RED);
         }
         //updateNeighbors();
         this.setBorderPainted(false);
         if(this.isBomb){
-            this.setText("\udca3");
+            this.setFont(new Font("Arial", Font.BOLD, 20));
+            this.setText("⬤");
         }else{
             this.setNumber();
         }

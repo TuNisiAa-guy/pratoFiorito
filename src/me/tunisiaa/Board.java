@@ -45,7 +45,8 @@ public class Board extends JFrame {
             }
         }
         this.setLayout(null);
-        this.setSize(this.width * (this.cellSize + this.cellDistance) + this.cellDistance, this.height * (this.cellSize + this.cellDistance) + this.cellDistance);
+        this.setSize(this.width * (this.cellSize + this.cellDistance + 1) + 4, this.height * (this.cellSize + this.cellDistance + 1) + 27);
+        this.setResizable(false);
     }
     public void render(){
         this.setVisible(true);
