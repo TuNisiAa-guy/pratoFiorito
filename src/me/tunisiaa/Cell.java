@@ -35,10 +35,16 @@ public class Cell extends JButton implements ActionListener{
         if(isBomb){
             setForeground(Color.RED);
         }
-        updateNeighbors();
+        //updateNeighbors();
         this.setBorderPainted(false);
+        if(this.isBomb){
+            this.setText("\udca3");
+        }else{
+            this.setNumber();
+        }
+        this.wasClicked = true;
     }
-    public void updateNeighbors(){
+    /*public void updateNeighbors(){
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if(i == 1 && j == 1){
@@ -55,7 +61,7 @@ public class Cell extends JButton implements ActionListener{
                 }
             }
         }
-    }
+    }*/
 
     public void setNumber(){
         if(this.wasClicked){
