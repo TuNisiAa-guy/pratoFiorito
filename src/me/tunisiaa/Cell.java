@@ -16,6 +16,7 @@ public class Cell extends JButton implements ActionListener{
     public final int y;
 
     public boolean isBomb;
+    public boolean isLocked;
 
     public Board board;
 
@@ -23,6 +24,7 @@ public class Cell extends JButton implements ActionListener{
         this.x = x;
         this.y = y;
         this.isBomb = isBomb;
+        this.isLocked = false;
         this.board = b;
         this.setFont(new Font("arial", Font.BOLD, 30));
         this.setBounds(x*(this.board.cellSize + this.board.cellDistance), y*(this.board.cellSize + this.board.cellDistance), this.board.cellSize, this.board.cellSize);
@@ -34,23 +36,29 @@ public class Cell extends JButton implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getModifiers() == 17){
-            this.setFont(new Font("arial", Font.BOLD, 20));
-            this.setText("X");
-            this.setForeground(Color.RED);
+            if(isLocked){
+                unlock();
+            }else{
+                lock();
+            }
             return;
+        }else if(!isLocked){
+            //updateNeighbors();
+            this.setBorderPainted(false);
+            if(this.isBomb){
+                this.setFont(new Font("Arial", Font.BOLD, 20));
+                this.setText("⬤");
+                this.setForeground(Color.RED);
+                board.setTitle(String.format("Minesweeper : %s strikes", ++board.strikes));
+            }else{
+                this.setNumber();
+                board.clicked++;
+            }
+            this.wasClicked = true;
         }
-        if(isBomb){
-            setForeground(Color.RED);
+        if(board.strikes == 3){
+            board.showLoserDialog();
         }
-        //updateNeighbors();
-        this.setBorderPainted(false);
-        if(this.isBomb){
-            this.setFont(new Font("Arial", Font.BOLD, 20));
-            this.setText("⬤");
-        }else{
-            this.setNumber();
-        }
-        this.wasClicked = true;
     }
     /*public void updateNeighbors(){
         for (int i = 0; i < 3; i++) {
@@ -72,7 +80,7 @@ public class Cell extends JButton implements ActionListener{
     }*/
 
     public void setNumber(){
-        if(this.wasClicked){
+        if(this.wasClicked || this.isLocked){
             return;
         }
         int bombs = 0;
@@ -93,4 +101,17 @@ public class Cell extends JButton implements ActionListener{
         }
         this.setText(Integer.toString(bombs));
     }
+    public void lock(){
+        this.setFont(new Font("arial", Font.BOLD, 20));
+        this.setText("X");
+        this.setForeground(Color.RED);
+        this.isLocked = true;
+    }
+    public void unlock(){
+        this.setFont(new Font("arial", Font.BOLD, 30));
+        this.setText("");
+        this.setForeground(Color.BLACK);
+        this.isLocked = false;
+    }
+
 }

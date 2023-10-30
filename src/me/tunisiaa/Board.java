@@ -14,6 +14,9 @@ public class Board extends JFrame {
     public int density;
 
     public Cell[][] board;
+    public int strikes = 0;
+    public int clicked = 0;
+    public int total;
 
     public Board(int width, int height, String difficulty){
         try {
@@ -47,6 +50,8 @@ public class Board extends JFrame {
         this.setLayout(null);
         this.setSize(this.width * (this.cellSize + this.cellDistance + 1) + 4, this.height * (this.cellSize + this.cellDistance + 1) + 27);
         this.setResizable(false);
+        this.setTitle(String.format("Minesweeper : %s strikes", this.strikes));
+        this.total = this.width * this.height;
     }
     public void render(){
         this.setVisible(true);
@@ -57,8 +62,8 @@ public class Board extends JFrame {
         dialog.setSize(300, 200);
         JLabel labelOne = new JLabel("You lost!");
         labelOne.setFont(new Font("Arial", Font.PLAIN, 30));
-        JLabel labelTwo = new JLabel(":(");
-        labelTwo.setFont(new Font("Arial", Font.PLAIN, 50));
+        JLabel labelTwo = new JLabel(String.format("You uncovered %s%s of the field", clicked*100.0/total, "%"));
+        labelTwo.setFont(new Font("Arial", Font.PLAIN, 16));
         labelOne.setBounds(75, 50,0, 0);
         labelTwo.setBounds(120, 50, 0, 0);
         dialog.add(labelOne);
